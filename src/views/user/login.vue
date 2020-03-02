@@ -1,8 +1,5 @@
 <template>
-   <div class='container'>
-     <h2>app组件</h2>
-     <router-view></router-view>
-   </div>
+   <div class='container'>login</div>
 </template>
 
 <script>

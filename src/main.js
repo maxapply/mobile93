@@ -10,6 +10,9 @@ import 'vant/lib/index.css'
 
 // vant rem基准值
 import 'amfe-flexible/index.min.js'
+
+// 全局样式导入
+import '@/assets/css/global.less'
 Vue.use(Vant)
 
 Vue.config.productionTip = false

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <van-nav-bar
+      fixed
+      title="文章详情"
       left-arrow
-      title="编辑资料"
-      right-text="保存"
       @click-left="$router.back()"
     />
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'user-profile'
+  name: 'article'
 }
 </script>
 

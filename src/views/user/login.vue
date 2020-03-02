@@ -1,10 +1,14 @@
 <template>
-   <div class='container'>login</div>
+  <div class="container">
+    <van-nav-bar
+      title="登录"
+    />
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'user-login'
 }
 </script>
 

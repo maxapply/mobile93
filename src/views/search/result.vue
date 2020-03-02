@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'search-result'
 }
 </script>
 

@@ -7,7 +7,7 @@
       <router-view></router-view>
     </div>
     <!-- Tabber标签栏 -->
-    <van-tabbar v-model="active">
+    <van-tabbar router>
       <van-tabbar-item to="/home" icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item to="/question" icon="chat-o">问答</van-tabbar-item>
       <van-tabbar-item to="/video" icon="video-o">视频</van-tabbar-item>

@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <!-- 导航栏 -->
-    <van-nav-bar title="黑马头条" right-text="搜索" @click-right="$router.push('/search')" />
+    <van-nav-bar fixed title="黑马头条" right-text="搜索" @click-right="$router.push('/search')" />
     <!-- 路由占位符， 显示home/question/video/user 二级路由 -->
     <div id="my_warapper">
       <router-view></router-view>
     </div>
     <!-- Tabber标签栏 -->
-    <van-tabbar router>
+    <van-tabbar route>
       <van-tabbar-item to="/home" icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item to="/question" icon="chat-o">问答</van-tabbar-item>
       <van-tabbar-item to="/video" icon="video-o">视频</van-tabbar-item>
@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style scoped lang='less'>
 .container {
   width: 100%;
   height: 100%;

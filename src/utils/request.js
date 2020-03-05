@@ -28,13 +28,15 @@ const instance = axios.create({
 
 // 请求拦截器
 instance.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
   // 判断token 在做设置（vuex判断）
   if (store.state.user.token) {
     // token前面添加 Bearer
-    config.headers.Authorization = 'Bearer' + store.state.user.token
+    config.headers.Authorization = 'Bearer ' + store.state.user.token
   }
   return config
 }, function (error) {
+  // 在请求错误做些什么
   return Promise.reject(error)
 })
 

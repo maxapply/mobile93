@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="app">
     <!-- 路由占位符 -->
     <router-view></router-view>
   </div>
@@ -11,5 +11,5 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style scoped lang='less'>
 </style>

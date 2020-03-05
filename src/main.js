@@ -13,6 +13,10 @@ import 'amfe-flexible/index.min.js'
 
 // 全局样式导入
 import '@/assets/css/global.less'
+
+// 导入 vee-validate 验证
+import '@/utils/validate.js'
+
 Vue.use(Vant)
 
 Vue.config.productionTip = false

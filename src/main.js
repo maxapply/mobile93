@@ -21,6 +21,15 @@ Vue.use(Vant)
 
 Vue.config.productionTip = false
 
+// 延时加载
+Vue.prototype.$sleep = item => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, item)
+  })
+}
+
 new Vue({
   router,
   store,

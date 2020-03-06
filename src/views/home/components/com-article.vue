@@ -11,6 +11,11 @@
                 <van-image width="85" height="85" :src="item.cover.images[item2-1]" />
               </van-grid-item>
             </van-grid>
+            <p>
+              <span>作者：{{item.aut_name}}</span>&nbsp;
+              <span>评论：{{item.comm_count}}</span>&nbsp;
+              <span>时间：{{item.pubdate}}</span>
+            </p>
           </template>
         </van-cell>
       </van-list>

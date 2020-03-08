@@ -13,3 +13,13 @@ export function apiArticeList ({ channel_id, timestamp }) {
     }
   })
 }
+// 对不喜欢的文章做处理
+export function apiArticleDislike (articleID) {
+  return request({
+    url: '/app/v1_0/article/dislikes',
+    method: 'POST',
+    data: {
+      target: articleID
+    }
+  })
+}

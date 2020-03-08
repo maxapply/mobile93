@@ -8,26 +8,33 @@
           <template slot="label">
             <van-grid v-if="item.cover.type>0" :column-num="item.cover.type" :border="false" :gutter="10">
               <van-grid-item  v-for="item2 in item.cover.type" :key="item2">
-                <van-image width="85" height="85" :src="item.cover.images[item2-1]" />
+                <van-image lazy-load width="85" height="85" :src="item.cover.images[item2-1]" />
               </van-grid-item>
             </van-grid>
             <p>
+              <van-icon name="close" @click="displayDialog(item.art_id.toString())" style="float:right" />
               <span>作者：{{item.aut_name}}</span>&nbsp;
               <span>评论：{{item.comm_count}}</span>&nbsp;
-              <span>时间：{{item.pubdate}}</span>
+              <span>时间：{{item.pubdate|formatTime}}</span>
             </p>
           </template>
         </van-cell>
       </van-list>
     </van-pull-refresh>
+    <come-aaction v-model="showDialog" :articleId="nowArticleID" @dislikeSuccess="handleDislikeSuccess" ></come-aaction>
   </div>
 </template>
 
 <script>
+// 不感兴趣组件
+import ComeAaction from './com-moreaciton.vue'
 // 导入 频道新闻推荐_V1.1
 import { apiArticeList } from '@/api/article.js'
 export default {
   name: 'com-article',
+  components: {
+    ComeAaction
+  },
   props: {
     channelID: {
       type: Number,
@@ -36,6 +43,8 @@ export default {
   },
   data () {
     return {
+      // 控制不感兴趣的显示与隐藏
+      showDialog: false,
       // 时间戳
       ts: Date.now(),
       // 文章列表
@@ -45,13 +54,26 @@ export default {
       // 上拉状态
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      // 不敢兴趣的文章id
+      nowArticleID: ''
     }
   },
   created () {
     this.getarticleList()
   },
   methods: {
+    // 对不感兴趣的处理，清除
+    handleDislikeSuccess () {
+      const index = this.articleList.findIndex((item) => {
+        return item.art_id.toString() === this.nowArticleID
+      })
+      this.articleList.splice(index, 1)
+    },
+    displayDialog (artid) {
+      this.showDialog = true
+      this.nowArticleID = artid
+    },
     async getarticleList () {
       const result = await apiArticeList({
         channel_id: this.channelID,

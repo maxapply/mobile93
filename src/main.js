@@ -3,8 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// vant 导入
-import Vant from 'vant'
+// 导入 时间过滤器
+import * as filters from '@/utils/filters.js'
+
+// vant 导入 --懒加载
+import Vant, { Lazyload } from 'vant'
 // vant css
 import 'vant/lib/index.css'
 
@@ -18,6 +21,12 @@ import '@/assets/css/global.less'
 import '@/utils/validate.js'
 
 Vue.use(Vant)
+// 注册懒加载
+Vue.use(Lazyload)
+// 注册时间过滤器
+Object.keys(filters).forEach(item => {
+  Vue.filter(item, filters[item])
+})
 
 Vue.config.productionTip = false
 

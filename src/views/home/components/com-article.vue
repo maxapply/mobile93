@@ -1,7 +1,7 @@
 <template>
   <div class="scroll-wrapper">
     <!-- 下拉刷新 -->
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :success-text="downSuccessText" success-duration="1500">
       <!--  上拉刷新 -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <van-cell v-for="item in articleList" :key="item.art_id.toString()" :title="item.title">
@@ -43,6 +43,8 @@ export default {
   },
   data () {
     return {
+      // z下拉刷新提示
+      downSuccessText: '',
       // 控制不感兴趣的显示与隐藏
       showDialog: false,
       // 时间戳
@@ -82,12 +84,22 @@ export default {
       return result
     },
     // 下拉刷新
-    onRefresh () {
-      setTimeout(() => {
-        this.onLoad() // 获取数据
-        this.isLoading = false
-        this.$toast.success('刷新成功')
-      }, 1000)
+    async onRefresh () {
+      await this.$sleep(800)
+      const res = await this.getarticleList()
+      if (res.results.length > 0) {
+        this.articleList.unshift(...res.results)
+        this.ts = res.pre_timestamp
+        this.downSuccessText = '文章更新成功'
+      } else {
+        this.downSuccessText = '已经是最新了'
+      }
+      this.isLoading = false
+      // setTimeout(() => {
+      //   this.onLoad() // 获取数据
+      //   this.isLoading = false
+      //   this.$toast.success('刷新成功')
+      // }, 1000)
     },
     // 上拉刷新
     async onLoad () {

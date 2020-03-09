@@ -23,3 +23,17 @@ export function apiArticleDislike (articleID) {
     }
   })
 }
+// 文章举报
+export function apiArticleReport ({ articleID, type }) {
+  return request({
+    url: '/app/v1_0/article/reports',
+    method: 'POST',
+    data: {
+      target: articleID,
+      type,
+      remark: ''
+    }
+
+  })
+}
+

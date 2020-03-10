@@ -16,12 +16,14 @@
           <span class="desc">点击进去频道</span>
         </div>
         <div>
-          <van-button type="danger" size="mini" plain>编辑</van-button>
+          <van-button type="danger" size="mini" plain round @click="isEdit=!isEdit">{{isEdit?'完成':'编辑'}}</van-button>
         </div>
       </div>
       <van-grid class="channel-content" :gutter="10" clickable>
-        <van-grid-item v-for="(item,k) in channelList" :key="item.id">
+        <van-grid-item v-for="(item,k) in channelList" :key="item.id" @click="clkchannel(item,k)">
           <span class="text" :style="{color:k===activeChannelIndex?'red':''}">{{item.name}}</span>
+           <!-- × 号小按钮 -->
+          <van-icon name="close" v-show="k>0&&isEdit"  class="close-icon" @click="uerToRest(item,k)"/>
         </van-grid-item>
       </van-grid>
     </div>
@@ -32,12 +34,12 @@
           <span class="title">频道推荐</span>
           <span class="desc">点击添加频道</span>
         </div>
-        <div>
+        <!-- <div>
           <van-button type="danger" size="mini" plain>编辑</van-button>
-        </div>
+        </div> -->
       </div>
       <van-grid class="channel-content" :gutter="10" clickable>
-        <van-grid-item v-for="item in resChannel" :key="item.id">
+        <van-grid-item v-for="item in resChannel" :key="item.id" @click="restToUser(item)">
           <div class="info">
             <span class="text">{{item.name}}</span>
           </div>
@@ -48,8 +50,8 @@
 </template>
 
 <script>
-// 获取所有频道接口
-import { apiChannelAll } from '@/api/channel.js'
+// 获取所有频道接口       // 添加频道并持久化  // 删除频道并持久化
+import { apiChannelAll, apiChannelAdd, apiChanneldel } from '@/api/channel.js'
 export default {
   name: 'com-channel',
   // 当前激活的下标  // 当前用户的频道信息传递过来
@@ -72,6 +74,8 @@ export default {
   },
   data () {
     return {
+      // 显示与隐藏叉号小按钮
+      isEdit: false,
       channelALL: []
     }
   },
@@ -80,6 +84,7 @@ export default {
     this.getchannelALLlist()
   },
   computed: {
+
     // 剩余频道
     resChannel () {
       // 我的频道 map 遍历 返回数组
@@ -97,6 +102,38 @@ export default {
     }
   },
   methods: {
+    // 我的频道，点击激活
+    clkchannel (channel, index) {
+      // 判断进入编辑状态
+      if (this.isEdit && index > 0) {
+        // 进行删除当前，点击宫格
+        return this.uerToRest(channel, index)
+      }
+      // 关闭弹出层
+      this.$emit('input', false)
+      // 修改父组件传递过来的变量
+      this.$emit('update:activeChannelIndex', index)
+    },
+
+    // 添加频道
+    restToUser (channel) {
+      // 页面添加频道
+      this.channelList.push(channel)
+      // 调用 apiChannelAdd 方法，对localStorage 本地添加
+      apiChannelAdd(channel)
+    },
+
+    // 删除频道
+    uerToRest (channel, index) {
+      // 页面删除频道
+      this.channelList.splice(index, 1)
+      // 调用 apiChannelAdd 方法，对localStorage 本地删除
+      apiChanneldel(channel)
+      if (this.channelList.length === index && this.activeChannelIndex === index) {
+        this.$emit('update:activeChannelIndex', index - 1)
+      }
+    },
+
     // 获取所有频道
     async getchannelALLlist () {
       const result = await apiChannelAll()

@@ -9,7 +9,7 @@
         <com-article :channelID="item.id"></com-article>
       </van-tab>
     </van-tabs>
-    <com-channel v-model="showChannel" :channelList="channelList" :activeChannelIndex="activeChannelIndex"></com-channel>
+    <com-channel v-model="showChannel" :channelList="channelList" :activeChannelIndex.sync="activeChannelIndex"></com-channel>
   </div>
 </template>
 

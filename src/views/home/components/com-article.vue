@@ -4,7 +4,7 @@
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :success-text="downSuccessText" success-duration="1500">
       <!--  上拉刷新 -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell v-for="item in articleList" :key="item.art_id.toString()" :title="item.title">
+        <van-cell v-for="item in articleList" :key="item.art_id.toString()" :title="item.title" @click="$router.push({name:'article',params:{aid:item.art_id.toString()}})">
           <template slot="label">
             <van-grid v-if="item.cover.type>0" :column-num="item.cover.type" :border="false" :gutter="10">
               <van-grid-item  v-for="item2 in item.cover.type" :key="item2">
@@ -12,7 +12,7 @@
               </van-grid-item>
             </van-grid>
             <p>
-              <van-icon name="close" @click="displayDialog(item.art_id.toString())" style="float:right" />
+              <van-icon name="close" @click.stop="displayDialog(item.art_id.toString())" style="float:right" />
               <span>作者：{{item.aut_name}}</span>&nbsp;
               <span>评论：{{item.comm_count}}</span>&nbsp;
               <span>时间：{{item.pubdate|formatTime}}</span>

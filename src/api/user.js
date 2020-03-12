@@ -14,3 +14,22 @@ export function apiUserLogin ({ mobile, code }) {
     }
   })
 }
+
+// 关注用户
+export function apiUserFollow (target) {
+  return request({
+    url: '/app/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target
+    }
+  })
+}
+
+// 取消关注用户
+export function apiUserUnfollow (target) {
+  return request({
+    url: '/app/v1_0/user/followings/' + target,
+    method: 'delete'
+  })
+}

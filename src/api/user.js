@@ -33,3 +33,11 @@ export function apiUserUnfollow (target) {
     method: 'delete'
   })
 }
+
+// 获取用户自己信息
+export function apiUserInfo () {
+  return request({
+    url: '/app/v1_0/user',
+    method: 'GET'
+  })
+}

@@ -41,3 +41,36 @@ export function apiUserInfo () {
     method: 'GET'
   })
 }
+
+// 获取用户个人资料
+export function apiUserProfile () {
+  return request({
+    url: '/app/v1_0/user/profile',
+    method: 'GET'
+  })
+}
+// 编辑用户照片资料（ 头像、 身份证照片）
+export function apiUserPhoto (FDobj) {
+  return request({
+    url: '/app/v1_0/user/photo',
+    method: 'PATCH',
+    data: FDobj
+
+  })
+}
+// 编辑用户个人资料（ 包含实名认证）
+export function apiUserSeaverProfile ({
+  name,
+  gender,
+  birthday
+}) {
+  return request({
+    url: '/app/v1_0/user/profile',
+    method: 'PATCH',
+    data: {
+      name,
+      gender,
+      birthday
+    }
+  })
+}

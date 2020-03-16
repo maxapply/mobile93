@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-wrapper">
+  <div class="scroll-wrapper" ref="myarticel" @scroll="remmber()">
     <!-- 下拉刷新 -->
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" :success-text="downSuccessText" success-duration="1500">
       <!--  上拉刷新 -->
@@ -43,6 +43,8 @@ export default {
   },
   data () {
     return {
+      // 记录滚动条位置
+      nowTop: 0,
       // z下拉刷新提示
       downSuccessText: '',
       // 控制不感兴趣的显示与隐藏
@@ -64,7 +66,15 @@ export default {
   created () {
     this.getarticleList()
   },
+  // keep-alive 组件激活后就调用的方法
+  activated () {
+    this.$refs.myarticel.scrollTop = this.nowTop
+  },
   methods: {
+    remmber () {
+      // 记录滚动条位置
+      this.nowTop = this.$refs.myarticel.scrollTop
+    },
     // 对不感兴趣的处理，清除
     handleDislikeSuccess () {
       const index = this.articleList.findIndex((item) => {

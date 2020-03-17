@@ -1,12 +1,19 @@
 <template>
-   <div class='container'>question</div>
+  <div class="container">
+    <van-skeleton title :row="3" />
+    <van-skeleton title :row="3" />
+    <van-skeleton title :row="3" />
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'question-index'
 }
 </script>
 
 <style lang='less'>
+.van-skeleton {
+  margin-top: 10px;
+}
 </style>

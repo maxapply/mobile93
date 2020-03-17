@@ -49,12 +49,34 @@ instance.interceptors.response.use(function (response) {
   } catch (err) {
     return response.data
   }
-}, function (error) {
+}, async function (error) {
   // 非正常响应
   if (error.response.status === 401) {
-    // token 2小时失效， 跳到登录页面
-    router.push('/login')
-    return new Promise(function () {})
+    if (!store.state.user.refresh_token) {
+      // token 2小时失效， 跳到登录页面
+      router.push('/login')
+      return new Promise(function () {})
+    }
+    try {
+      const result = await axios({
+        url: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
+        method: 'PUT',
+        headers: {
+          Authorization: 'Bearer ' + store.state.user.refresh_token
+        }
+      })
+      // console.log(result)
+      store.commit('updataUser', {
+        token: result.data.data.token,
+        refresh_token: store.state.user.refresh_token
+      })
+      return instance(error.config)
+    } catch (err) {
+      store.commit('clearUser')
+      // token 2小时失效， 跳到登录页面
+      router.push('/login')
+      return new Promise(function () {})
+    }
   }
   return Promise.reject(error)
 })

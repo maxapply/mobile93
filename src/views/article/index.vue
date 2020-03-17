@@ -17,6 +17,7 @@
         </div>
         <van-button round size="small" :type="article.is_followed?'default':'info'" :loading="followLoadding" @click="followMe()">{{article.is_followed?'取消关注':'+关注'}}</van-button>
       </div>
+      <!-- <button @click="$store.commit('clearToken')">模拟token失效</button> -->
       <div class="content">
         <p v-html="article.content"></p>
       </div>

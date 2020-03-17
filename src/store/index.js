@@ -20,6 +20,10 @@ export default new Vuex.Store({
     clearUser: function (state) {
       state.user = {}
       JSON.parse(localStorage.removeItem(USER_KEY))
+    },
+    // 删除token
+    clearToken: function (state) {
+      delete state.user.token
     }
   },
   actions: {
